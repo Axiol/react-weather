@@ -1,0 +1,22 @@
+.card {
+  position: relative;
+  background-color: white;
+  border-radius: 20px;
+  text-align: right;
+  font-weight: bold;
+  font-size: 16px;
+  padding: 20px 20px 70px 20px;
+}
+
+.value {
+  font-weight: bolder;
+  font-size: 30px;
+  margin: 10px 0 6px 0;
+}
+
+.image {
+  max-width: 100px;
+  position: absolute;
+  bottom: 15px;
+  left: 20px;
+}

@@ -17,4 +17,10 @@
 .data {
   background-color: #f4f4f4;
   grid-column: 2 / 4;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 30px;
+  grid-auto-rows: min-content;
+  /* align-items: start; */
+  padding: 30px;
 }
