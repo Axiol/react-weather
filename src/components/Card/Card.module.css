@@ -20,3 +20,9 @@
   bottom: 15px;
   left: 20px;
 }
+
+@media (max-width: 860px) {
+  .card {
+    margin-bottom: 20px;
+  }
+}

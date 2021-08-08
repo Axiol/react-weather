@@ -6,3 +6,11 @@
   align-items: center;
   justify-content: center;
 }
+
+@media (max-width: 860px) {
+  .background {
+    display: block;
+    overflow-x: hidden;
+    overflow-y: scroll;
+  }
+}
