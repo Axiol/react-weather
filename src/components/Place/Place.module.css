@@ -1,0 +1,15 @@
+.place {
+  grid-column: 1 / 4;
+  text-align: right;
+}
+
+.input {
+  font-family: 'Nunito', sans-serif;
+  font-weight: bold;
+  font-size: 17px;
+  padding: 10px 20px;
+  text-align: right;
+  background-color: white;
+  border: none;
+  border-radius: 4px;
+}
