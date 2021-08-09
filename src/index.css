@@ -52,6 +52,14 @@ table {
   src: local('Nunito'), url(./fonts/Nunito-Regular.ttf) format('truetype');
 }
 
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
 body {
 	font-family: 'Nunito', sans-serif;
 }
