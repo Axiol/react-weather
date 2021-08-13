@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 
 import styles from './Wrapper.module.css';
@@ -16,12 +16,21 @@ const sunset = require('../../assets/images/sunset.svg');
 
 const Wrapper = () => {
   const [ place, setPlace ] = useState('liège');
+  const [ initialLoading, setInitialLoading ] = useState(true);
+  const [ weatherData, setWeatherData ] = useState(null);
 
   const { isLoading, error, data } = useQuery(['weatherData', place], () =>
      fetch(`${process.env.REACT_APP_API_URL}/weather?q=${place}&units=metric&appid=${process.env.REACT_APP_API_KEY}`).then(res =>
        res.json()
      )
    );
+
+   useEffect(() => {
+     if(data) {
+      console.log(data);
+      setWeatherData(data);
+     }
+   }, [data]);
 
    const mToKm = (value) => {
      return value / 1000;
@@ -50,26 +59,26 @@ const Wrapper = () => {
   };
 
   const updatePlace = (value) => {
-    console.log(value);
+    setInitialLoading(false);
     setPlace(value);
   };
 
-  if (isLoading) return 'Loading...';
-  if (error) return 'Error.';
+  if ((isLoading && initialLoading) || !weatherData) return <div className={styles.loading}>Loading...</div>;
+  if (error) return <div className={styles.loading}>Error</div>;
 
   return (
     <div className={styles.wrapper}>
       <div className={styles.weather}>
-        <Weather place={data.name} condition={data.weather[0].description} conditionId={data.weather[0].id} temperature={data.main.temp} feels={data.main.feels_like} />
+        <Weather place={weatherData.name} condition={weatherData.weather[0].description} conditionId={weatherData.weather[0].id} temperature={weatherData.main.temp} feels={weatherData.main.feels_like} />
       </div>
       <div className={styles.data}>
         <Place onSubmit={updatePlace} />
-        <Card label={'Humidity'} value={data.main.humidity} unit={`%`} icon={humidity} />
-        <Card label={'Wind speed'} value={data.wind.speed} unit={`m/s`} icon={windspeed} />
-        <Card label={'Wind direction'} value={degToCardinal(data.wind.deg)} icon={winddirection} />
-        <Card label={'Visibility'} value={mToKm(data.visibility)} unit={`km`} icon={visibility} />
-        <Card label={'Sunrise'} value={tcToHour(data.sys.sunrise)} icon={sunrise} />
-        <Card label={'Sunset'} value={tcToHour(data.sys.sunset)} icon={sunset} />
+        <Card label={'Humidity'} value={weatherData.main.humidity} unit={`%`} icon={humidity} />
+        <Card label={'Wind speed'} value={weatherData.wind.speed} unit={`m/s`} icon={windspeed} />
+        <Card label={'Wind direction'} value={degToCardinal(weatherData.wind.deg)} icon={winddirection} />
+        <Card label={'Visibility'} value={mToKm(weatherData.visibility)} unit={`km`} icon={visibility} />
+        <Card label={'Sunrise'} value={tcToHour(weatherData.sys.sunrise)} icon={sunrise} />
+        <Card label={'Sunset'} value={tcToHour(weatherData.sys.sunset)} icon={sunset} />
       </div>
     </div>
   )
